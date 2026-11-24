@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ng generate *)",
+      "Bash(npm install *)",
+      "Bash(npx tailwindcss *)",
+      "Bash(./node_modules/.bin/tailwindcss init *)",
+      "Bash(node_modules/.bin/tailwindcss init *)",
+      "Bash(npm list *)",
+      "Bash(npm exec *)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(npm ls *)",
+      "Bash(npm uninstall *)",
+      "Bash(npm start *)"
+    ]
+  }
+}

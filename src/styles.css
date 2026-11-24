@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* MANDATORY: adapt native UI (scrollbars, form controls, canvas) viewport-wide */
+:root {
+  color-scheme: dark;
+}
+
+/* Opt in to smooth anchor scrolling only when the user has no reduced-motion preference */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* The fixed navbar must not cover anchor targets */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Native scrollspy: track fragment links and style the link whose target is in view.
+   :is() keeps the IntersectionObserver fallback class working in browsers
+   without :target-current (an unrecognized pseudo-class inside :is() is dropped). */
+.nav-links {
+  scroll-target-group: auto;
+}
+.nav-links a:is(:target-current, .target-current) {
+  color: #f97316; /* orange-500: not color-only — paired with font-weight below */
+  font-weight: 600;
+}

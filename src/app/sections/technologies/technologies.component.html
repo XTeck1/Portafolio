@@ -1,0 +1,31 @@
+<section id="tecnologias" tabindex="-1" class="py-24 px-6">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-white mb-12 text-center">Tecnologías</h2>
+
+    <div class="grid md:grid-cols-2 gap-12">
+      <!-- Frontend -->
+      <div>
+        <h3 class="text-xl font-semibold text-white mb-6 text-center">Frontend</h3>
+        <div class="grid grid-cols-4 gap-4">
+          @for (tech of tecnologiasFrontend; track tech.nombre) {
+            <div class="flex items-center justify-center p-3 bg-neutral-800 border border-neutral-700 rounded-xl hover:shadow-lg hover:scale-105 hover:border-orange-500 transition-all duration-300 cursor-default" [title]="tech.nombre">
+              <span [innerHTML]="tech.svg | safeHtml:tech.color" class="w-8 h-8"></span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Backend -->
+      <div>
+        <h3 class="text-xl font-semibold text-white mb-6 text-center">Backend</h3>
+        <div class="grid grid-cols-4 gap-4">
+          @for (tech of tecnologiasBackend; track tech.nombre) {
+            <div class="flex items-center justify-center p-3 bg-neutral-800 border border-neutral-700 rounded-xl hover:shadow-lg hover:scale-105 hover:border-orange-500 transition-all duration-300 cursor-default" [title]="tech.nombre">
+              <span [innerHTML]="tech.svg | safeHtml:tech.color" class="w-8 h-8"></span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
