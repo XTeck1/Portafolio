@@ -20,8 +20,32 @@
     <app-contact />
   </main>
 
-  <!-- Footer -->
-  <footer class="py-8 text-center text-neutral-300 border-t border-neutral-800">
+  <!-- Footer: extra bottom padding on mobile so the fixed back-to-top
+       button never covers the copyright text -->
+  <footer class="py-8 pb-24 sm:pb-8 text-center text-neutral-300 border-t border-neutral-800">
     <p class="text-sm">© {{ currentYear }} Portafolio. Todos los derechos reservados.</p>
   </footer>
+
+  <!-- Back-to-top: visibility driven by scroll-state queries (styles.css) -->
+  <a
+    href="#inicio"
+    class="back-to-top"
+    aria-label="Volver al inicio"
+    (focusout)="onBackToTopFocusOut($event)"
+  >
+    <svg
+      class="w-5 h-5"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m5 12 7-7 7 7" />
+      <path d="M12 19V5" />
+    </svg>
+  </a>
 </div>

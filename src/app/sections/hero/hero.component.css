@@ -1,3 +1,14 @@
+/* Soft orange glow behind the hero copy — static gradient, so no motion
+   and no reduced-motion handling needed. */
+section {
+  background-image: radial-gradient(
+    ellipse 60% 55% at 50% 35% var(--in-oklab),
+    rgba(249, 115, 22, 0.16) 0%,
+    rgba(249, 115, 22, 0.05) 45%,
+    transparent 72%
+  );
+}
+
 .hero-word {
   display: inline-block;
   overflow: hidden;

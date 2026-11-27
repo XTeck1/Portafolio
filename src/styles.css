@@ -5,6 +5,20 @@
 /* MANDATORY: adapt native UI (scrollbars, form controls, canvas) viewport-wide */
 :root {
   color-scheme: dark;
+  /* Gradient interpolation space token: empty by default so older browsers
+     get a valid gradient without the `in oklab` method (see @supports below). */
+  --in-oklab: ;
+  /* Scrollbar colors: thumb keeps ≥3:1 contrast vs track and page bg (WCAG 1.4.11) */
+  --scrollbar-thumb: #f97316; /* orange-500 */
+  --scrollbar-track: #171717; /* neutral-900 */
+  /* Propagates to the viewport scrollbar */
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+@supports (background: linear-gradient(in oklab, white, black)) {
+  :root {
+    --in-oklab: in oklab;
+  }
 }
 
 /* Opt in to smooth anchor scrolling only when the user has no reduced-motion preference */
@@ -28,4 +42,126 @@ section[id] {
 .nav-links a:is(:target-current, .target-current) {
   color: #f97316; /* orange-500: not color-only — paired with font-weight below */
   font-weight: 600;
+}
+
+/* Page background: solid base + subtle dot grid over the whole document */
+body {
+  background-color: #171717;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Text selection uses the site accent (browser UI theming) */
+::selection {
+  background-color: #f97316;
+  color: #171717;
+}
+
+/* Legacy WebKit scrollbar colors for browsers without scrollbar-color */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+    border: 3px solid var(--scrollbar-track);
+  }
+}
+
+/* The root scroller becomes a scroll-state query container so descendants
+   can react to scroll position without JS listeners. scroll-state applies
+   no containment, so layout and position:fixed descendants are unaffected. */
+html {
+  container-type: scroll-state;
+}
+
+/* Back-to-top button: shown only when it is useful (user has scrolled down).
+   Fallback first — always visible — for browsers without scroll-state
+   queries (Firefox, Safari); supported browsers opt into dynamic
+   visibility inside @supports. */
+.back-to-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 40; /* above content, below the fixed navbar (z-50) */
+  display: grid;
+  place-items: center;
+  width: 2.75rem; /* 44px: meets WCAG 2.5.8 target size */
+  height: 2.75rem;
+  border-radius: 9999px;
+  background-color: #f97316; /* orange-500 */
+  color: #171717; /* neutral-900: icon contrast ≥ 4.5:1 on orange */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.back-to-top:hover {
+  background-color: #fb923c; /* orange-400 */
+}
+
+.back-to-top:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+@supports (container-type: scroll-state) {
+  .back-to-top {
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 20px;
+  }
+
+  /* The container can scroll toward the top only after the user has
+     scrolled down — that is exactly when the button is useful. */
+  @container scroll-state(scrollable: top) {
+    .back-to-top {
+      visibility: visible;
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .back-to-top {
+      transition:
+        visibility 0.3s,
+        opacity 0.3s ease,
+        translate 0.3s ease;
+    }
+  }
+}
+
+/* Scroll reveal: content fades/slides in as it enters the viewport.
+   Decorative progressive enhancement — browsers without scroll-driven
+   animation support simply show everything (no JS fallback needed).
+   The `animation-range: entry` check in @supports filters partial support. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry 0% cover 25%)) {
+    @keyframes reveal-in {
+      from {
+        opacity: 0;
+        translate: 0 1.5rem;
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+
+    .reveal {
+      /* The `animation` shorthand resets timeline/range — declare them after */
+      animation: reveal-in auto linear backwards;
+      animation-timeline: view();
+      /* entry 0% → cover 25%: elements taller than the viewport (mobile
+         paragraphs) finish revealing at 25% coverage, before the reading
+         position, instead of staying half-faded until fully covered. */
+      animation-range: entry 0% cover 25%;
+    }
+  }
 }

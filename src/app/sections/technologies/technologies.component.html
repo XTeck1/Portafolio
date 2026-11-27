@@ -1,30 +1,42 @@
 <section id="tecnologias" tabindex="-1" class="py-24 px-6">
   <div class="max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold text-white mb-12 text-center">Tecnologías</h2>
+    <h2 class="reveal text-3xl font-bold text-white mb-12 text-center">Tecnologías</h2>
 
     <div class="grid md:grid-cols-2 gap-12">
       <!-- Frontend -->
-      <div>
+      <div class="reveal">
         <h3 class="text-xl font-semibold text-white mb-6 text-center">Frontend</h3>
         <div class="grid grid-cols-4 gap-4">
           @for (tech of tecnologiasFrontend; track tech.nombre) {
-            <div class="flex items-center justify-center p-3 bg-neutral-800 border border-neutral-700 rounded-xl hover:shadow-lg hover:scale-105 hover:border-orange-500 transition-all duration-300 cursor-default" [title]="tech.nombre">
-              <span [innerHTML]="tech.svg | safeHtml:tech.color" class="w-8 h-8"></span>
+            <div [title]="tech.nombre" class="flex items-center justify-center p-3 bg-neutral-800 border border-neutral-700 rounded-xl hover:shadow-lg hover:scale-105 hover:border-orange-500 transition-all duration-300 cursor-default">
+              <img [src]="tech.archivo" [alt]="tech.nombre" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8" />
             </div>
           }
         </div>
       </div>
 
       <!-- Backend -->
-      <div>
+      <div class="reveal">
         <h3 class="text-xl font-semibold text-white mb-6 text-center">Backend</h3>
         <div class="grid grid-cols-4 gap-4">
           @for (tech of tecnologiasBackend; track tech.nombre) {
-            <div class="flex items-center justify-center p-3 bg-neutral-800 border border-neutral-700 rounded-xl hover:shadow-lg hover:scale-105 hover:border-orange-500 transition-all duration-300 cursor-default" [title]="tech.nombre">
-              <span [innerHTML]="tech.svg | safeHtml:tech.color" class="w-8 h-8"></span>
+            <div [title]="tech.nombre" class="flex items-center justify-center p-3 bg-neutral-800 border border-neutral-700 rounded-xl hover:shadow-lg hover:scale-105 hover:border-orange-500 transition-all duration-300 cursor-default">
+              <img [src]="tech.archivo" [alt]="tech.nombre" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8" />
             </div>
           }
         </div>
+      </div>
+    </div>
+
+    <!-- Herramientas -->
+    <div class="reveal mt-12">
+      <h3 class="text-xl font-semibold text-white mb-6 text-center">Herramientas</h3>
+      <div class="flex justify-center gap-4">
+        @for (tech of tecnologiasHerramientas; track tech.nombre) {
+          <div [title]="tech.nombre" class="flex items-center justify-center p-3 bg-neutral-800 border border-neutral-700 rounded-xl hover:shadow-lg hover:scale-105 hover:border-orange-500 transition-all duration-300 cursor-default">
+            <img [src]="tech.archivo" [alt]="tech.nombre" width="32" height="32" loading="lazy" decoding="async" class="w-8 h-8" />
+          </div>
+        }
       </div>
     </div>
   </div>

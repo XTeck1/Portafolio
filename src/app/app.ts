@@ -48,6 +48,24 @@ export class App implements AfterViewInit, OnDestroy {
     });
   };
 
+  /**
+   * The back-to-top control hides itself at the top of the page via
+   * scroll-state queries. If focus was on it when it disappeared (e.g. the
+   * user pressed Home), move focus to the top section instead of dropping
+   * it on <body>. No-op in browsers where the button never hides.
+   */
+  onBackToTopFocusOut(event: FocusEvent): void {
+    const button = event.currentTarget as HTMLElement | null;
+    if (
+      !button ||
+      event.relatedTarget ||
+      getComputedStyle(button).visibility !== 'hidden'
+    ) {
+      return;
+    }
+    document.querySelector<HTMLElement>('#inicio')?.focus();
+  }
+
   /** Fallback for browsers without scroll-target-group (Firefox, Safari). */
   private observeSections() {
     const links = Array.from(document.querySelectorAll('.nav-links a'));
